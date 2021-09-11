@@ -1,38 +1,137 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head>
+<head >
     <meta charset="UTF-8">
-    <title>用户</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link th:href="@{/css/main.css}" rel="stylesheet" type="text/css">
+    <title>Title</title>
+    <!--    <script th:src="@{/js/bootstrap.min.js}" type="text/javascript"></script>-->
+    <!-- 引入 layui.css -->
+    <link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
 
+    <!-- 引入 layui.js -->
+    <script src="https://www.layuicdn.com/layui/layui.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
+
+    <script>
+        function ShowAddBox(){
+            layer.open({
+                type:1,
+                title:"登录",
+                area:["395px","300px"],
+                content:$("#addBox"),
+            });
+        }
+        function editUser(uid,uname,uage) {
+            var uid = uid,uname=uname,uage=uage;
+
+            document.getElementById('iii').value=uid;
+            document.getElementById('nnn').value=uname;
+            document.getElementById('aaa').value=uage;
+                layer.open({
+                type:1,
+                title:"登录",
+                area:["395px","300px"],
+                content:$("#editBox"),
+            });
+
+        }
+
+        function delUser(uid) {
+            var uid = uid;
+            $.ajax({
+                url: "http://localhost:8080/delUser",
+                type: "POST",
+                data:{uId:uid},
+                dataType: "text",
+                success: function(data){
+                    alert("删除成功！");
+                    window.location.href= "http://localhost:8080/users";
+                },
+                error:function(err){
+                    console.log(err.statusText);
+                    console.log('异常');
+                }
+            });
+
+        }
+
+    </script>
 </head>
 <body>
-<div class="topbar" th:replace="common/header::topBar"></div>
-<div class="topbar" th:replace="common/side::sidebar"></div>
+<div class="layui-layout layui-layout-admin">
+    <div th:replace="common/frame::header"></div>
+    <div th:replace="common/frame::side"></div>
+    <div class="layui-body">
+        <table class="layui-table">
+            <thead>
+            <tr>
+                <td>序号</td>
+                <td>学号</td>
+                <td>姓名</td>
+                <td>性别</td>
+                <td>操作</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user,stat:${users}">
+                <td th:text="${stat.count}"></td>
+                <td th:text="${user.getUid()}"></td>
+                <td th:text="${user.getUname()}"></td>
+                <td th:text="${user.getUage()}"></td>
+                <td>
+                    <a th:onclick="editUser( [[${user.getUid}]],[[${user.getUname}]],[[${user.getUage}]])" style="margin-left: 10px"><i class="layui-icon  layui-icon-edit" onmousemove=""></i></a>
+                    <a th:onclick="delUser( [[${user.getUid}]])"  style="margin-left: 10px"><i class="layui-icon layui-icon-reduce-circle"></i></a>
+<!--                    <a th:href="@{/delUser?uId=[[${user.getUid}]]}"  style="margin-left: 10px"><i class="layui-icon layui-icon-reduce-circle"></i></a>-->
 
-<table class="table">
-    <thead>
-    <tr>
-        <td>序号</td>
-        <td>学号</td>
-        <td>姓名</td>
-        <td>性别</td>
-        <td>操作</td>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="user,stat:${users}">
-        <td th:text="${stat.count}"></td>
-        <td th:text="${user.getUid()}"></td>
-        <td th:text="${user.getUname()}"></td>
-        <td th:text="${user.getUage()}"></td>
-        <td>
-            <a onclick=""><i class="icon-trash"></i></a>
-        </td>
-    </tr>
-    </tbody>
-</table>
+                    <a style="margin-left: 10px"><i class="layui-icon layui-icon-about"></i></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <button class="layui-btn" th:onclick="ShowAddBox()">添加</button>
+
+        <div th:replace="common/frame::foot"></div>
+    </div>
+</div>
+<div id="addBox" style="display: none">
+    <form class="layui-form" th:action="@{/addUser}" method="post">
+        <div class="layui-form-item">
+            学号: <input name="uid" type="text" th:placeholder="学号">
+        </div>
+        <div class="layui-form-item">
+            姓名:<input name="uname" type="text" placeholder="姓名">
+        </div>
+        <div class="layui-form-item">
+            年龄:<input name="uage" type="text" placeholder="年龄">
+        </div>
+        <button type="submit">提交</button>
+    </form>
+</div><div id="editBox" style="display: none">
+    <form class="layui-form" th:action="@{/editUser}" method="post">
+        <div class="layui-form-item">
+            学号: <input name="uid" type="text" th:placeholder="学号" id="iii">
+        </div>
+        <div class="layui-form-item">
+            姓名:<input name="uname" type="text" placeholder="姓名" id="nnn">
+        </div>
+        <div class="layui-form-item">
+            年龄:<input name="uage" type="text" placeholder="年龄" id="aaa">
+        </div>
+        <button type="submit">提交</button>
+    </form>
+</div>
+
 </body>
+
+<script type="module">
+    //注意：导航 依赖 element 模块，否则无法进行功能性操作
+    import * as layui from "../static/js/dropzone/dropzone";
+
+    layui.use('element', function(){
+        var element = layui.element;
+
+        //…
+    });
+</script>
 </html>

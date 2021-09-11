@@ -6,4 +6,22 @@
     <select id="getAllUsers" resultType="com.springboot.demo.model.User">
         select * from `users`
     </select>
+
+
+    <insert id="addUser" parameterType="com.springboot.demo.model.User">
+        insert into `users` values (#{uid},#{uname},#{uage})
+    </insert>
+
+
+    <update id="editUser" parameterType="com.springboot.demo.model.User">
+       UPDATE users SET uname=#{uname},uage=#{uage} WHERE uid = #{uid}
+    </update>
+
+    <delete id="delUser" parameterType="String">
+        delete from `users` where uid = #{uid}
+    </delete>
+
+<!--    <insert id="addUser" >-->
+<!--        insert into `users` values ("#{uid","uname","uage"})-->
+<!--    </insert>-->
 </mapper>
