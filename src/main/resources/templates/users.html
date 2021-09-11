@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/main.css}" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+<div class="topbar" th:replace="common/header::topBar"></div>
+<div class="topbar" th:replace="common/side::sidebar"></div>
+
+<table class="table">
+    <thead>
+    <tr>
+        <td>序号</td>
+        <td>学号</td>
+        <td>姓名</td>
+        <td>性别</td>
+        <td>操作</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user,stat:${users}">
+        <td th:text="${stat.count}"></td>
+        <td th:text="${user.getUid()}"></td>
+        <td th:text="${user.getUname()}"></td>
+        <td th:text="${user.getUage()}"></td>
+        <td>
+            <a onclick=""><i class="icon-trash"></i></a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

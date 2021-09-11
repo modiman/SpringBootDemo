@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common::#head">
+</head>
+<body class="sticky-header">
+<section>
+    <!-- left side start-->
+    <div th:replace="common::left-sider"></div>
+    <!-- 左侧结束-->
+    <!-- main content start-->
+    <div class="main-content">
+
+        <!-- 头部分开始-->
+        <div th:insert="common::#main-header"></div>
+        <!-- 头部分结束-->
+        <table class="table">
+            <thead>
+            <tr>
+                <td>序号</td>
+                <td>学号</td>
+                <td>姓名</td>
+                <td>性别</td>
+                <td>操作</td>
+            </tr>
+            </thead>
+            <tbody>
+            <!--            <tr th:each="stu,stat:${page}">-->
+            <!--                <td th:text="${stat.count}"></td>-->
+            <!--                <td th:text="${stu.getSno()}"></td>-->
+            <!--                <td th:text="${stu.getName()}"></td>-->
+            <!--                <td th:text="${stu.getSex()}"></td>-->
+            <!--                <td id="app">-->
+            <!--        <a onclick=""><span class="glyphicon glyphicon-plus">-->
+            <!--            <el-dialog :visible.sync="visible" title="Hello world">-->
+            <!--        -->
+            <!--             </el-dialog>-->
+            <!--        </span></a>-->
+            <el-button @click="visible = true">Button</el-button>
+            <el-dialog :visible.sync="visible" title="Hello world">
+                <form action="" type="post">
+                    <input>
+                </form>
+
+            </el-dialog>
+            </td>
+            </tr>
+            <!--    <p th:abbr="${page.list}"></p>-->
+            </tbody>
+        </table>
+    </div>
+</section>
+
+
+<a href="/addStudent">
+    <button>添加学生</button>
+</a>
+<div th:replace="common::foot-scripts"></div>
+</body>
+
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- import JavaScript -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: function () {
+            return {visible: false}
+        }
+    })
+</script>
+</html>

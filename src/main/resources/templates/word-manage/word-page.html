@@ -1,0 +1,108 @@
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<title>words</title>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<link th:href="@{/css/main.css}" rel="stylesheet" type="text/css">
+
+<script>
+    function deleteWord(num, pageNum) {
+        alert(num)
+        $.ajax({
+            url: '/deleteWord',
+            type: 'POST',
+            data: {
+                'wid': num,
+
+            },
+            success: function (data) {
+                $(window).attr("location", "word-manage/words")
+                //toPage(5)
+            },
+            error: function () {
+                alert
+                toPage(pageNum)
+            }
+        });
+    }
+</script>
+<div class="topbar" th:replace="common/header::topBar"></div>
+
+<div id="index_table">
+    <table class="table">
+        <thead>
+        <tr>
+            <td>序号</td>
+            <td>单词</td>
+            <td>中文</td>
+            <td>补充</td>
+            <td>操作</td>
+        </tr>
+        </thead>
+
+        <tr th:each="word,stat:${page}">
+            <td th:text="${word.getWid()}"></td>
+            <td th:text="${word.getWname()}"></td>
+            <td th:text="${word.getWmeaning()}"></td>
+            <td th:text="${word.getWbuchong()}"></td>
+            <td>
+                <button class="btn btn-xs btn-flat" title="操作"
+                        th:onclick="'deleteWord('+${word.getWid()}+','+${pageNum}+')'">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </button>
+            </td>
+        </tr>
+
+
+    </table>
+    当前第 <span th:text="${pageNum}"></span>页
+    <!-- 分页导航条 -->
+    <div>
+        <button type="button" class="btn btn-danger btn-sm" style="float: right"
+                th:onclick="'javascript:toPage('+${pageNum+1}+')' ">下一页
+        </button>
+
+        <select name="pageNum" style="float: right" class="selectpicker" title="跳转到">
+            <option th:each="w,stat:${page}" th:text="${stat.count}"></option>
+            <!--            <option>2</option>-->
+        </select>
+        <button type="submit">跳转</button>
+        <button type="button" class="btn btn-danger btn-sm" style="float: right"
+                th:onclick="'javascript:toPage('+${pageNum+(-1)}+')' ">上一页
+        </button>
+
+        <nav aria-label="...">
+            <ul class="pager">
+                <li class="previous"><a onclick="toPage(1)"><span aria-hidden="true">&larr;</span> 首页</a></li>
+                <li class="next"><a onclick="toPage(100000)"><span aria-hidden="true">&rarr;</span>末页</a></li>
+            </ul>
+        </nav>
+
+    </div>
+</div>
+
+<!-- js 代码 -->
+<script type="text/javascript">
+
+    var pageSize = 10;
+
+    //跳转第几页
+    function toPage(num) {
+        $.ajax({
+            url: '/word-manage/words/page',
+            type: 'POST',
+            data: {
+                'pageNum': num,        //第几页
+                'pageSize': pageSize    // 每页数据数
+            },
+            success: function (data) {
+                $("#index_table").empty();
+                $("#index_table").append(data);
+            }
+        });
+
+    }
+</script>
+</html>

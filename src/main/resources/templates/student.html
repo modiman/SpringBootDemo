@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/common::#head">
+    <style>
+        #a {
+            background-color: #d0e9c6
+        }
+    </style>
+</head>
+<body class="sticky-header">
+<section>
+    <!-- left side start-->
+    <div th:replace="common/common::left-sider"></div>
+    <!-- 左侧结束-->
+    <!-- main content start-->
+    <div class="main-content">
+
+        <!-- 头部分开始-->
+        <div th:insert="common/common::#main-header"></div>
+        <!-- 头部分结束-->
+        <table class="table">
+            <thead>
+            <tr>
+                <td>序号</td>
+                <td>学号</td>
+                <td>姓名</td>
+                <td>性别</td>
+                <td>操作</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="stu,stat:${page}">
+                <td th:text="${stat.count}"></td>
+                <td th:text="${stu.getSno()}"></td>
+                <td th:text="${stu.getSname()}"></td>
+                <td th:text="${stu.getSsex()}"></td>
+                <td id="app">
+                    <!--        <a onclick=""><span class="glyphicon glyphicon-plus">-->
+                    <!--            <el-dialog :visible.sync="visible" title="Hello world">-->
+                    <!--        -->
+                    <!--             </el-dialog>-->
+                    <!--        </span></a>-->
+                    <el-button @click="visible = true">Button</el-button>
+                    <el-dialog :visible.sync="visible" title="Hello world">
+                        <!--                        <form action="" type="post">-->
+                        <!--                            <input>-->
+                        <!--                        </form>-->
+
+                    </el-dialog>
+                </td>
+            </tr>
+
+
+            <!--    <p th:abbr="${page.list}"></p>-->
+            </tbody>
+
+
+        </table>
+        <ul class="pagination" style="margin-left: 40%">
+            <li>
+                <a href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li>
+                <a href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+        <h1 th:text="${pageInfo.getPageNum()}"></h1>
+        <h1 th:text="${pageInfo.pages}">总共页</h1>
+    </div>
+</section>
+
+
+<a href="/addStudent">
+    <button>添加学生</button>
+</a>
+<div th:replace="common/common::foot-scripts"></div>
+</body>
+
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- import JavaScript -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: function () {
+            return {visible: false}
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,59 @@
+<!--单词卡片-->
+
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<title>words</title>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<link th:href="@{../static/css/main.css}" rel="stylesheet" type="text/css">
+<style>
+    tr {
+        width: 300px;
+    }
+</style>
+
+
+<div id="index_table">
+    <h1 th:text="${pages.get(0).getWname()}"></h1>
+    <table class="table">
+
+        <tr th:each="page,stat:${pages}">
+            <td th:text="${page.getWmeaning()}"></td>
+            <td>
+                <button th:onclick="'PostId('+${page.getWid()}+','+${pages.get(0).getWid()}+')'">选择</button>
+            </td>
+        </tr>
+    </table>
+    <button>上一个</button>
+    <select name="pageNum">
+        <option value="1">1</option>
+        <option value="1">2</option>
+    </select>
+    <button onclick="PostPageNum()">下一个</button>
+
+</div>
+<script>
+    function PostPageNum(pageNum) {
+        $.ajax({
+            url: '/word-manage/word-card/pageNum',
+            type: 'POST',
+            data: {
+                'pageNum': 5,        //第几页
+            },
+            success: function (data) {
+                window.location.href = "http://localhost:8080/word-manage/word-card/#{pageNum}"
+            }
+        });
+    }
+
+    function PostId(id1, id2) {
+        if (id1 == id2) {
+            alert("success")
+        } else {
+            alert("error")
+        }
+    }
+</script>
+</html>
