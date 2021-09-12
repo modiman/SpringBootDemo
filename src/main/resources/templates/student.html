@@ -1,100 +1,147 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="common/common::#head">
-    <style>
-        #a {
-            background-color: #d0e9c6
+<head >
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/layui/css/layui.css" />
+
+    <script src="layui/layui.js"></script>
+
+    <script src="/jquery-3.6.0.js"></script>
+
+    <script>
+        function ShowAddBox(){
+            layer.open({
+                type:1,
+                title:"登录",
+                area:["395px","300px"],
+                content:$("#addBox"),
+            });
         }
-    </style>
+        function editUser(uid,uname,uage) {
+            var uid = uid,uname=uname,uage=uage;
+
+            document.getElementById('iii').value=uid;
+            document.getElementById('nnn').value=uname;
+            document.getElementById('aaa').value=uage;
+            layer.open({
+                type:1,
+                title:"登录",
+                area:["395px","300px"],
+                content:$("#editBox"),
+            });
+
+        }
+
+        function delStudent(sno) {
+            var sno = sno;
+            $.ajax({
+                url: "http://localhost:8080/delStudent",
+                type: "POST",
+                data:{sno:sno},
+                dataType: "text",
+                success: function(data){
+                    alert("删除成功！");
+                    window.location.href= "http://localhost:8080/students";
+                },
+                error:function(err){
+                    console.log(err.statusText);
+                    console.log('异常');
+                }
+            });
+
+        }
+
+    </script>
 </head>
-<body class="sticky-header">
-<section>
-    <!-- left side start-->
-    <div th:replace="common/common::left-sider"></div>
-    <!-- 左侧结束-->
-    <!-- main content start-->
-    <div class="main-content">
+<body>
+<div class="layui-layout layui-layout-admin">
+    <div th:replace="common/frame::header"></div>
+    <div th:replace="common/frame::side"></div>
+    <div class="layui-body">
 
-        <!-- 头部分开始-->
-        <div th:insert="common/common::#main-header"></div>
-        <!-- 头部分结束-->
-        <table class="table">
-            <thead>
-            <tr>
-                <td>序号</td>
-                <td>学号</td>
-                <td>姓名</td>
-                <td>性别</td>
-                <td>操作</td>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="stu,stat:${page}">
-                <td th:text="${stat.count}"></td>
-                <td th:text="${stu.getSno()}"></td>
-                <td th:text="${stu.getSname()}"></td>
-                <td th:text="${stu.getSsex()}"></td>
-                <td id="app">
-                    <!--        <a onclick=""><span class="glyphicon glyphicon-plus">-->
-                    <!--            <el-dialog :visible.sync="visible" title="Hello world">-->
-                    <!--        -->
-                    <!--             </el-dialog>-->
-                    <!--        </span></a>-->
-                    <el-button @click="visible = true">Button</el-button>
-                    <el-dialog :visible.sync="visible" title="Hello world">
-                        <!--                        <form action="" type="post">-->
-                        <!--                            <input>-->
-                        <!--                        </form>-->
+        <div id="demo5"></div>
 
-                    </el-dialog>
-                </td>
-            </tr>
+        <table id="demo" class="layui-table"></table>
 
+        <button class="layui-btn" th:onclick="ShowAddBox()">添加</button>
 
-            <!--    <p th:abbr="${page.list}"></p>-->
-            </tbody>
-
-
-        </table>
-        <ul class="pagination" style="margin-left: 40%">
-            <li>
-                <a href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li>
-                <a href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-        <h1 th:text="${pageInfo.getPageNum()}"></h1>
-        <h1 th:text="${pageInfo.pages}">总共页</h1>
+        <div th:replace="common/frame::foot"></div>
     </div>
-</section>
+</div>
+<div id="addBox" style="display: none">
+    <form class="layui-form" th:action="@{/addUser}" method="post">
+        <div class="layui-form-item">
+            学号: <input name="uid" type="text" th:placeholder="学号">
+        </div>
+        <div class="layui-form-item">
+            姓名:<input name="uname" type="text" placeholder="姓名">
+        </div>
+        <div class="layui-form-item">
+            年龄:<input name="uage" type="text" placeholder="年龄">
+        </div>
+        <button type="submit">提交</button>
+    </form>
+</div><div id="editBox" style="display: none">
+    <form class="layui-form" th:action="@{/editUser}" method="post">
+        <div class="layui-form-item">
+            学号: <input name="uid" type="text" th:placeholder="学号" id="iii">
+        </div>
+        <div class="layui-form-item">
+            姓名:<input name="uname" type="text" placeholder="姓名" id="nnn">
+        </div>
+        <div class="layui-form-item">
+            年龄:<input name="uage" type="text" placeholder="年龄" id="aaa">
+        </div>
+        <button type="submit">提交</button>
+    </form>
+</div>
 
-
-<a href="/addStudent">
-    <button>添加学生</button>
-</a>
-<div th:replace="common/common::foot-scripts"></div>
 </body>
+<script src="/layui/layui.js"></script>
+<script type="text/html" id="barDemo">
 
-<script src="https://unpkg.com/vue/dist/vue.js"></script>
-<!-- import JavaScript -->
-<script src="https://unpkg.com/element-ui/lib/index.js"></script>
-<script>
-    new Vue({
-        el: '#app',
-        data: function () {
-            return {visible: false}
-        }
-    })
+    <a class="layui-btn layui-btn-xs" lay-event="detail">查看<i class="layui-icon  layui-icon-edit" onmousemove=""></i></a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" th:onclick="delStudent('s7')">删除</a>
+
+    <!-- 这里同样支持 laytpl 语法，如： -->
+    {{#  if(d.auth > 2){ }}
+    <a class="layui-btn layui-btn-xs" lay-event="check">审核</a>
+    {{#  } }}
+</script>
+<script th:inline="javascript">
+//数据表格
+        layui.use('table', function () {
+            var table = layui.table;
+
+            //第一个实例
+            table.render({
+                elem: '#demo',
+                height: 500,
+                url: 'http://localhost:8080/dataTable', //数据接口
+                page: {
+                    layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+                    //,curr: 5 //设定初始在第 5 页
+                    ,groups: 22 //只显示 1 个连续页码
+                    ,first: false //不显示首页
+                    ,last: false //不显示尾页
+                }, //开启分页
+                cols: [[ //表头
+                    {field: 'no', title: '序号', width: 80, sort: true, fixed: 'left'},
+                    {field: 'sno', title: 'ID', width: 80, sort: true, fixed: 'left'},
+                    {field: 'sname', title: '用户名', width: 80},
+                    {field: 'ssex', title: '性别', width: 80, sort: true},
+                    // ,{field: 'setting', title: '操作', width:80, sort: true},
+                    {fixed: 'right', title: "操作", width: 250, align: 'center', toolbar: '#barDemo'}
+                ]],
+
+            });
+            //调用分页
+
+        });
+
 </script>
 </html>
+

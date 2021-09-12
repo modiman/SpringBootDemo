@@ -30,12 +30,12 @@ public class IndexController {
         return mvc;
     }
 
-    @RequestMapping("test")
-    public ModelAndView testPage() {
-
-        ModelAndView mvc = new ModelAndView("index1");
-        return mvc;
-    }
+//    @RequestMapping("test")
+//    public ModelAndView testPage() {
+//
+//        ModelAndView mvc = new ModelAndView("index1");
+//        return mvc;
+//    }
 
 
 }

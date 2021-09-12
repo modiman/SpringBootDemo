@@ -15,4 +15,10 @@ public class HomeController {
         ModelAndView mvc = new ModelAndView("common/frame");
         return mvc;
     }
+    @RequestMapping(value = {"/test"})
+    public ModelAndView testWork(String sno) {
+        ModelAndView mvc = new ModelAndView("test");
+        return mvc;
+    }
+
 }

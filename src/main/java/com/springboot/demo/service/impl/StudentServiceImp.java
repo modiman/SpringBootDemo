@@ -16,8 +16,8 @@ public class StudentServiceImp implements StudentService {
     private StudentMapper studentMapper;
 
     @Override
-    public int add(Student student) {
-        return this.studentMapper.add(student);
+    public int addStudent(Student student) {
+        return this.studentMapper.addStudent(student);
     }
 
     @Override
@@ -26,8 +26,8 @@ public class StudentServiceImp implements StudentService {
     }
 
     @Override
-    public int deleteBysno(String sno) {
-        return this.studentMapper.deleteBysno(sno);
+    public int delStudent(String sno) {
+        return this.studentMapper.delStudent(sno);
     }
 
     @Override

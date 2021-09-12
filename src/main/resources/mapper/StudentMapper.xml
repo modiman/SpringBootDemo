@@ -6,4 +6,13 @@
     <select id="getAllStudents" resultType="com.springboot.demo.model.Student">
         select * from `student`
     </select>
+
+    <insert id="getAllStudents" parameterType="com.springboot.demo.model.Student">
+       insert into student(sno,sname,ssex) values(#{sno},#{name},#{sex})
+    </insert>
+
+
+    <insert id="delStudent" parameterType="String">
+       delete from student where sno = #{sno}
+    </insert>
 </mapper>
