@@ -44,12 +44,12 @@ public class StudentController {
     @RequestMapping(value = "/students")
     public ModelAndView list(@RequestParam(value = "curr",defaultValue = "1")int curr) {
         List<Student> list = studentService.getAllStudents();
-        PageInfo<Student> s = studentService.findAllStudentByPage(1, 5);
+        PageInfo<Student> pageInfo = studentService.findAllStudentByPage(1, 5);
         ModelAndView mvc = new ModelAndView("/student");
-        mvc.addObject("students", list);
-        mvc.addObject("pageInfo", s);
-        System.out.println(curr);
-        mvc.addObject("page", s.getList());
+    
+        mvc.addObject("pageInfo", pageInfo);
+
+
         System.out.println("收到请求");
         return mvc;
     }

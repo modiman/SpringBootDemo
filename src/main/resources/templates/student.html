@@ -11,6 +11,7 @@
     <script src="/jquery-3.6.0.js"></script>
 
     <script>
+
         function ShowAddBox(){
             layer.open({
                 type:1,
@@ -99,8 +100,13 @@
 </div>
 
 </body>
+<script>
+
+    document.getElementById("student").setAttribute("class","layui-nav-item layui-this");
+</script>
 <script src="/layui/layui.js"></script>
 <script type="text/html" id="barDemo">
+
 
     <a class="layui-btn layui-btn-xs" lay-event="detail">查看<i class="layui-icon  layui-icon-edit" onmousemove=""></i></a>
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
@@ -112,36 +118,39 @@
     {{#  } }}
 </script>
 <script th:inline="javascript">
-//数据表格
-        layui.use('table', function () {
-            var table = layui.table;
+    //数据表格
+    layui.use('table', function () {
+        var table = layui.table;
 
-            //第一个实例
-            table.render({
-                elem: '#demo',
-                height: 500,
-                url: 'http://localhost:8080/dataTable', //数据接口
-                page: {
-                    layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
-                    //,curr: 5 //设定初始在第 5 页
-                    ,groups: 22 //只显示 1 个连续页码
-                    ,first: false //不显示首页
-                    ,last: false //不显示尾页
-                }, //开启分页
-                cols: [[ //表头
-                    {field: 'no', title: '序号', width: 80, sort: true, fixed: 'left'},
-                    {field: 'sno', title: 'ID', width: 80, sort: true, fixed: 'left'},
-                    {field: 'sname', title: '用户名', width: 80},
-                    {field: 'ssex', title: '性别', width: 80, sort: true},
-                    // ,{field: 'setting', title: '操作', width:80, sort: true},
-                    {fixed: 'right', title: "操作", width: 250, align: 'center', toolbar: '#barDemo'}
-                ]],
-
-            });
-            //调用分页
+        //第一个实例
+        table.render({
+            elem: '#demo',
+            height: 500,
+            url: 'http://localhost:8080/dataTable', //数据接口
+            page: {
+                layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+                //,curr: 5 //设定初始在第 5 页
+                ,groups: 22 //只显示 1 个连续页码
+                ,first: false //不显示首页
+                ,last: false //不显示尾页
+            }, //开启分页
+            cols: [[ //表头
+                {field: 'no', title: '序号', width: 80, sort: true, fixed: 'left'},
+                {field: 'sno', title: 'ID', width: 80, sort: true, fixed: 'left'},
+                {field: 'sname', title: '用户名', width: 80},
+                {field: 'ssex', title: '性别', width: 80, sort: true},
+                // ,{field: 'setting', title: '操作', width:80, sort: true},
+                {fixed: 'right', title: "操作", width: 250, align: 'center', toolbar: '#barDemo'}
+            ]],
 
         });
+        //调用分页
+
+    });
+
+
 
 </script>
+
 </html>
 

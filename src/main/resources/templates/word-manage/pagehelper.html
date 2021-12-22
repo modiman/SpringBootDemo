@@ -33,7 +33,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="word,stat:${words}">
+            <tr th:each="word,stat:${pageInfo.list}">
                 <td th:text="${word.getWid()}"></td>
                 <td th:text="${word.getWname()}"></td>
                 <td th:text="${word.getWmeaning()}"></td>

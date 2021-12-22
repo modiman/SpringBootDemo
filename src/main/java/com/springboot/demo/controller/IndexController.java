@@ -25,7 +25,7 @@ public class IndexController {
 
     @RequestMapping(value = {"/", "index"})
     public ModelAndView indexPage() {
-        log.info("启动成功，美滋儿滋儿");
+//        log.info("启动成功，美滋儿滋儿");
         ModelAndView mvc = new ModelAndView("index");
         return mvc;
     }

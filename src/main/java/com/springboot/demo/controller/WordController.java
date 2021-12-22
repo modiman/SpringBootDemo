@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class WordController {
@@ -20,7 +22,7 @@ public class WordController {
 
     @RequestMapping(value = "/word-manage/words", method = RequestMethod.GET)
     public ModelAndView getAllWords() {
-        ModelAndView mvc = new ModelAndView("/word-manage/word-list");
+        ModelAndView mvc = new ModelAndView("/word-manage/words");
         mvc.addObject("words", wordService.getAllWords());
         PageInfo<Word> page = wordService.findAllWordByPage(1, 10);
         PageInfo<Word> pages = wordService.findAllWordByPage(0, 4);
@@ -29,6 +31,32 @@ public class WordController {
 
         return mvc;
     }
+
+    @RequestMapping("/word-manage/pagehelper")
+    public ModelAndView findAll(@RequestParam(name = "page",required = true,defaultValue = "1") int page,
+                                @RequestParam(name = "size",required = true,defaultValue = "4") int size) throws Exception {
+        ModelAndView mv=new ModelAndView("/word-manage/pagehelper");
+
+        PageInfo pageInfo = wordService.findAllWordByPage(page,size);
+        //PageInfo就是一个分页Bean
+
+        mv.addObject("pageInfo",pageInfo);
+        return mv;
+    }
+
+//    @RequestMapping(value = "/word-manage/pagehelper")
+//    public ModelAndView getPageHelper() {
+//        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+//        ModelAndView mvc = new ModelAndView("/word-manage/pagehelper");
+//
+////        String pageNum = request.getParameter("pageNum");
+//
+//        PageInfo<Word> pages = wordService.findAllWordByPage(0, 4);
+//        mvc.addObject("pages", pages.getList());
+//        return mvc;
+//    }
+
+
 
     @RequestMapping(value = "/word-manage/word-card")
     public ModelAndView getWordCards() {
