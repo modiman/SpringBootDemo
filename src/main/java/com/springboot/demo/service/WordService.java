@@ -11,7 +11,7 @@ import java.util.List;
 public interface WordService {
     List<Word> getAllWords();
 
-    PageInfo<Word> findAllWordByPage(int pageNum, int pageSize);
+    PageInfo<Word>  findAllWordByPage(int pageNum, int pageSize);
 
     void deleteWord(int wid);
 }

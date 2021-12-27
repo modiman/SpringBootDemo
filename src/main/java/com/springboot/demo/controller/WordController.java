@@ -16,23 +16,22 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
+@RequestMapping(value = "/word-manage")
 public class WordController {
     @Autowired
     private WordService wordService;
-
-    @RequestMapping(value = "/word-manage/words", method = RequestMethod.GET)
+    //全部单词展览
+    @RequestMapping(value = "/words", method = RequestMethod.GET)
     public ModelAndView getAllWords() {
         ModelAndView mvc = new ModelAndView("/word-manage/words");
-        mvc.addObject("words", wordService.getAllWords());
-        PageInfo<Word> page = wordService.findAllWordByPage(1, 10);
-        PageInfo<Word> pages = wordService.findAllWordByPage(0, 4);
-        mvc.addObject("pages", pages.getList());
-        mvc.addObject("page", page.getList());
+        List<Word> words = wordService.getAllWords();
+        mvc.addObject("words", words);
 
         return mvc;
     }
 
-    @RequestMapping("/word-manage/pagehelper")
+    //分页展览
+    @RequestMapping("/pagehelper")
     public ModelAndView findAll(@RequestParam(name = "page",required = true,defaultValue = "1") int page,
                                 @RequestParam(name = "size",required = true,defaultValue = "4") int size) throws Exception {
         ModelAndView mv=new ModelAndView("/word-manage/pagehelper");
@@ -58,10 +57,10 @@ public class WordController {
 
 
 
-    @RequestMapping(value = "/word-manage/word-card")
+    @RequestMapping(value = "/word-card")
     public ModelAndView getWordCards() {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        ModelAndView mvc = new ModelAndView("/word-manage/word-card");
+        ModelAndView mvc = new ModelAndView("/word-card");
 
 //        String pageNum = request.getParameter("pageNum");
 
@@ -70,10 +69,10 @@ public class WordController {
         return mvc;
     }
 
-    @RequestMapping(value = "/word-manage/word-card-list")
+    @RequestMapping(value = "/word-card-list")
     public ModelAndView getWordCardsByNum() {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        ModelAndView mvc = new ModelAndView("/word-manage/word-card-list");
+        ModelAndView mvc = new ModelAndView("/word-card-list");
 
         String pageNum = request.getParameter("pageNum");
         System.out.println(pageNum);

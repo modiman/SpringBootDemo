@@ -48,7 +48,12 @@
             </tbody>
         </table>
 
+
+
+
         <button class="layui-btn" th:onclick="ShowAddBox()">添加</button>
+
+
 
         <div th:replace="common/frame::foot"></div>
     </div>
@@ -60,14 +65,5 @@
     document.getElementById("word").setAttribute("class","layui-nav-item layui-this");
 
 </script>
-<script type="module">
-    //注意：导航 依赖 element 模块，否则无法进行功能性操作
-    import * as layui from "../static/js/dropzone/dropzone";
 
-    layui.use('element', function(){
-        var element = layui.element;
-
-        //…
-    });
-</script>
 </html>
