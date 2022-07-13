@@ -7,7 +7,7 @@
         select * from `student`
     </select>
 
-    <insert id="getAllStudents" parameterType="com.springboot.demo.model.Student">
+    <insert id="addStudent" parameterType="com.springboot.demo.model.Student">
        insert into student(sno,sname,ssex) values(#{sno},#{name},#{sex})
     </insert>
 

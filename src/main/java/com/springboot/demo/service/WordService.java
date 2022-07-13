@@ -14,4 +14,5 @@ public interface WordService {
     PageInfo<Word>  findAllWordByPage(int pageNum, int pageSize);
 
     void deleteWord(int wid);
+    List<Word> findByPage(int pageNum, int pageSize);
 }

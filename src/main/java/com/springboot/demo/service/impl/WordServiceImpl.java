@@ -37,4 +37,12 @@ public class WordServiceImpl implements WordService {
     public void deleteWord(int wid) {
         wordMapper.deleteWord(wid);
     }
+
+    @Override
+    public List<Word> findByPage(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Word> lists = wordMapper.getAllWords();
+        PageInfo<Word> pageInfo = new PageInfo(lists);
+        return pageInfo.getList();
+    }
 }

@@ -26,6 +26,8 @@ public interface StudentMapper {
     })
     Student queryStudentBySno(String sno);
 
+
+
     List<Student> getAllStudents();
 
 

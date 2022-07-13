@@ -5,9 +5,7 @@ import com.springboot.demo.model.Word;
 import com.springboot.demo.service.WordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
+//@RestController
 @RequestMapping(value = "/word-manage")
 public class WordController {
     @Autowired
@@ -31,6 +30,7 @@ public class WordController {
     }
 
     //分页展览
+
     @RequestMapping("/pagehelper")
     public ModelAndView findAll(@RequestParam(name = "page",required = true,defaultValue = "1") int page,
                                 @RequestParam(name = "size",required = true,defaultValue = "4") int size) throws Exception {
@@ -43,6 +43,12 @@ public class WordController {
         return mv;
     }
 
+    @GetMapping("/words/{page}/{size}")  //需要改用@RestController
+    public List<Word> findAll(@PathVariable("page") Integer page, @PathVariable("size") Integer size){
+       List<Word> pageWord = wordService.findByPage(page,size);
+        System.out.println(pageWord);
+       return pageWord;
+    }
 //    @RequestMapping(value = "/word-manage/pagehelper")
 //    public ModelAndView getPageHelper() {
 //        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
